@@ -7,11 +7,15 @@ import (
 	"time"
 )
 
+type HttpTimeMetrics struct {
+	DNS  time.Duration
+	TCP  time.Duration
+	TLS  time.Duration
+	TTFB time.Duration
+}
+
 type HttpMetrics struct {
-	DNS     time.Duration
-	TCP     time.Duration
-	TLS     time.Duration
-	TTFB    time.Duration
+	Data    HttpTimeMetrics
 	Status  int
 	Headers http.Header
 }
@@ -99,10 +103,12 @@ func CheckHttp(url string) (HttpMetrics, error) {
 	_ = tlsDone
 
 	return HttpMetrics{
-		DNS:     dnsDur,
-		TCP:     tcpDur,
-		TLS:     tlsDur,
-		TTFB:    ttfb,
+		Data: HttpTimeMetrics{
+			DNS:  dnsDur,
+			TCP:  tcpDur,
+			TLS:  tlsDur,
+			TTFB: ttfb,
+		},
 		Status:  resp.StatusCode,
 		Headers: headers,
 	}, nil

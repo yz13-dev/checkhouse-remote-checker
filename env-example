@@ -1,0 +1,2 @@
+REGION="ru:moscow"
+JWT_SECRET="ABC"

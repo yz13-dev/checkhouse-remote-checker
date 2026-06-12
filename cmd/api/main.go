@@ -20,6 +20,9 @@ func main() {
 	}
 
 	region_code := os.Getenv("REGION")
+	if region_code == "" {
+		log.Fatal("REGION is not set")
+	}
 
 	router := gin.Default()
 
@@ -43,7 +46,6 @@ func main() {
 			}
 
 			metrics, err := api.CheckHttp(url)
-
 			if err != nil {
 				c.JSON(500, gin.H{
 					"error": err.Error(),
@@ -52,7 +54,9 @@ func main() {
 			}
 
 			c.JSON(200, gin.H{
-				"metrics": metrics,
+				"metrics": metrics.Data,
+				"status":  metrics.Status,
+				"headers": metrics.Headers,
 			})
 
 		})
@@ -111,6 +115,7 @@ func main() {
 
 		c.JSON(200, gin.H{
 			"timestamp":   time,
+			"status":      "ok",
 			"region_code": region_code,
 		})
 	})
