@@ -2,11 +2,20 @@ package middleware
 
 import (
 	"log"
+	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/yz13-dev/checkhouse-remote-checker/internal/auth"
 )
+
+func getLocalRegion() string {
+	region := strings.TrimSpace(os.Getenv("REGION"))
+	if region == "" {
+		return "default"
+	}
+	return region
+}
 
 func TokenAuthMiddleware(jwtService *auth.JWTService) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -31,7 +40,17 @@ func TokenAuthMiddleware(jwtService *auth.JWTService) gin.HandlerFunc {
 			c.AbortWithStatus(401)
 			return
 		}
-		log.Println(claims.Region)
+		claimRegion := claims.Region
+		localRegion := getLocalRegion()
+		// log.Println(claimRegion, localRegion)
+
+		if claimRegion != localRegion {
+			log.Println("Region mismatch")
+			c.AbortWithStatus(401)
+			return
+		}
+
+		log.Println("Region matched")
 
 	}
 }
