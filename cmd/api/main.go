@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/yz13-dev/checkhouse-checker/internal/auth"
-	api "github.com/yz13-dev/checkhouse-checker/internal/checkers"
-	"github.com/yz13-dev/checkhouse-checker/internal/middleware"
+	"github.com/yz13-dev/checkhouse-remote-checker/internal/auth"
+	api "github.com/yz13-dev/checkhouse-remote-checker/internal/checkers"
+	"github.com/yz13-dev/checkhouse-remote-checker/internal/middleware"
 )
 
 func main() {

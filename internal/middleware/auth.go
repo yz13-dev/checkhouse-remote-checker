@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yz13-dev/checkhouse-checker/internal/auth"
+	"github.com/yz13-dev/checkhouse-remote-checker/internal/auth"
 )
 
 func TokenAuthMiddleware(jwtService *auth.JWTService) gin.HandlerFunc {

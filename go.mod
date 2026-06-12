@@ -1,4 +1,4 @@
-module github.com/yz13-dev/checkhouse-checker
+module github.com/yz13-dev/checkhouse-remote-checker
 
 go 1.26.4
 
